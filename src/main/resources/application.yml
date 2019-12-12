@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: app-breed
+  devtools:
+    add-properties: false
+server:
+  port: 9999
+  servlet:
+    context-path: /

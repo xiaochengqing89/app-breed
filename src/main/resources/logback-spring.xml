@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<contextName>app-breed</contextName>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/logs/app-breed/app-breed.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<!-- 非当天的Log文件压缩备份为 archive/app-breed.2018-08-10.zip -->
+			<fileNamePattern>/logs/app-breed/archive/app-breed.%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<!-- This is kafka appender -->
+	<!--<appender name="KafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+	    <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
+	        <layout class="net.logstash.logback.layout.LogstashLayout" >
+	            <includeContext>true</includeContext>
+	            <includeCallerData>true</includeCallerData>
+	            <customFields>{"appName":"app-breed"}</customFields>
+	            <fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames"/>
+	        </layout>
+	        <charset>UTF-8</charset>
+	    </encoder>
+	    &lt;!&ndash;kafka topic 需要与配置文件里面的topic一致 否则kafka会沉默并鄙视你&ndash;&gt;
+	    <topic>breed</topic>
+	    <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
+	    <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+	    <producerConfig>bootstrap.servers=192.168.140.100:9092</producerConfig>
+	</appender>
+	<root level="ERROR">
+	    <appender-ref ref="KafkaAppender" />
+	</root>-->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" /><!-- 输出到控制台 -->
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

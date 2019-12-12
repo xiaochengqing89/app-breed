@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    config:
+      name: connection-dev
+      profile: pro
+      label: master
+      discovery:
+        enabled: true
+        service-id: CONFIG-SERVER
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer0:8000/eureka/,http://peer1:8001/eureka/,http://peer2:8002/eureka/
