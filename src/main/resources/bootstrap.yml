@@ -1,13 +1,12 @@
 spring:
   cloud:
     config:
-      name: connection-dev
-      profile: pro
+      name: connection-dev,bootstrap-dev
+      profile: dev
       label: master
-      discovery:
-        enabled: true
-        service-id: CONFIG-SERVER
-eureka:
-  client:
-    service-url:
-      defaultZone: http://peer0:8000/eureka/,http://peer1:8001/eureka/,http://peer2:8002/eureka/
+      uri: http://localhost:8888
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
